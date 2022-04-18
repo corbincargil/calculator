@@ -96,10 +96,10 @@ const updateDisplay = function(button){
             const currentDisplayContent = Array.from(displayContainer.textContent);
             const operatorIndex = currentDisplayContent.indexOf(operator);
             let sliceStart = operatorIndex+2;
-            let sliceEnd = currentDisplayContent.length+1;
+            let sliceEnd = currentDisplayContent.length;
             num2 = currentDisplayContent.slice(sliceStart,sliceEnd);
-            num2 = num2.toString().trim();
-            num2 = parseFloat(num2);
+            num2 = num2.join().trim().replace(/[^0-9]/g,"");
+            num2 = parseInt(num2);
             //if no operator, keep numbers in display somehow
 
             operate(operator,num1,num2);
