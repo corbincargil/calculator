@@ -99,7 +99,7 @@ const updateDisplay = function(button){
             let sliceEnd = currentDisplayContent.length;
             num2 = currentDisplayContent.slice(sliceStart,sliceEnd);
             num2 = num2.join().trim().replace(/[^0-9]/g,"");
-            num2 = parseInt(num2);
+            num2 = parseFloat(num2);
             //if no operator, keep numbers in display somehow
 
             operate(operator,num1,num2);
@@ -112,10 +112,6 @@ const updateDisplay = function(button){
             console.log('An error occurred.');
             break;
     }
-}
-
-const testFunction = () => {
-    console.log('this is a test');
 }
 
 //                          ~~DOM Manipulation~~
