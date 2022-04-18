@@ -1,5 +1,6 @@
 //                          ~~Variable Declarations~~
 let result;
+let operator;
 
 
 
@@ -30,7 +31,7 @@ const operate = function(operator,num1,num2){
             break;
         default:
             console.log('An error occurred.');
-        
+    return result;
     }
 }
 
@@ -68,20 +69,41 @@ const updateDisplay = function(button){
             displayContainer.textContent += '0';
             break;
         case "+":
+            num1 = displayContainer.textContent;
+            num1 = parseFloat(num1);
             displayContainer.textContent += ' + ';
             operator = '+';
             break;
         case "-":
+            num1 = displayContainer.textContent;
+            num1 = parseFloat(num1);
             displayContainer.textContent += ' - ';
+            operator = '-';
             break;
         case "*":
+            num1 = displayContainer.textContent;
+            num1 = parseFloat(num1);
             displayContainer.textContent += ' * ';
+            operator = '*';
             break;
         case "/":
+            num1 = displayContainer.textContent;
+            num1 = parseFloat(num1);
             displayContainer.textContent += ' / ';
+            operator = '/';
             break;
         case "ENTER":
-            displayContainer.textContent = 'You pressed enter';
+            const currentDisplayContent = Array.from(displayContainer.textContent);
+            const operatorIndex = currentDisplayContent.indexOf(operator);
+            let sliceStart = operatorIndex+2;
+            let sliceEnd = currentDisplayContent.length+1;
+            num2 = currentDisplayContent.slice(sliceStart,sliceEnd);
+            num2 = num2.toString().trim();
+            num2 = parseFloat(num2);
+            //if no operator, keep numbers in display somehow
+
+            operate(operator,num1,num2);
+            displayContainer.textContent = result;
             break;
         case "CLEAR":
             displayContainer.textContent = '';
