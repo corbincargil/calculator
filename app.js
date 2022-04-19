@@ -1,6 +1,7 @@
 //                          ~~Variable Declarations~~
 let result;
 let operator;
+let currentDisplayContent;
 
 //TODO: 
 // - Allow users to be able to type in multiple calculations. i.e. 10+2+3 !== 33. 
@@ -35,6 +36,7 @@ const calculate = function(operator,num1,num2){
             break;
         default:
             console.log('An error occurred.');
+    operator = '';
     return result;
     }
 }
@@ -65,34 +67,22 @@ const updateDisplay = function(button){
             displayContainer.textContent += buttonValue;
             break;
         case "+":
-            num1 = displayContainer.textContent;
-            num1 = parseFloat(num1);
-            if (operator) {
-
-            }
-            displayContainer.textContent += ' + ';
-            operator = '+';
-            break;
         case "-":
-            num1 = displayContainer.textContent;
-            num1 = parseFloat(num1);
-            displayContainer.textContent += ' - ';
-            operator = '-';
-            break;
         case "*":
-            num1 = displayContainer.textContent;
-            num1 = parseFloat(num1);
-            displayContainer.textContent += ' * ';
-            operator = '*';
-            break;
         case "/":
+            if (operator) {
+                currentDisplayContent = Array.from(displayContainer.textContent);
+                getNumTwo(currentDisplayContent);
+                calculate(operator,num1,num2);
+                displayContainer.textContent = result;
+            }
             num1 = displayContainer.textContent;
             num1 = parseFloat(num1);
-            displayContainer.textContent += ' / ';
-            operator = '/';
+            displayContainer.textContent += ` ${buttonValue} `;
+            operator = buttonValue;
             break;
         case "ENTER":
-            const currentDisplayContent = Array.from(displayContainer.textContent);
+            currentDisplayContent = Array.from(displayContainer.textContent);
             //if no operator, keep numbers in display somehow
             getNumTwo(currentDisplayContent);
             calculate(operator,num1,num2);
