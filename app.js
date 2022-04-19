@@ -1,13 +1,12 @@
 //                          ~~Variable Declarations~~
 let result;
 let operator;
+let currentDisplayString;
 let currentDisplayContent;
+let newDisplayContent;
 let lastElement;
 
 //                          ~~To-Do~~  
-// - Fix bug where if you input a num & operator, you can't select a diff operator
-            //Done. Just need to clean it up (refactor code, create functions, make more readable)
-// - Add decimal button
 // - Add backspace button
 // - Add keyboard functionality
 // - Display what is stored in memory (what the prev calc was)
@@ -99,9 +98,23 @@ const eraseMem = function() {
     operator = '';
     num2 = '';
 }
+//backspace function
+const backspace = function() {
+    currentDisplayString = displayContainer.textContent.toString();
+    currentDisplayContent = Array.from(displayContainer.textContent);
+    if (!result) {displayContainer.textContent = ''
+    } else if (currentDisplayString == result.toString()) {
+        eraseMem();
+        displayContainer.textContent = '';
+    } else {
+        currentDisplayContent.pop()
+        newDisplayContent = currentDisplayContent.toString();
+        displayContainer.textContent = newDisplayContent.replace(/[,]/g,"");
+    }
+}
 //updateDisplay function
 const updateDisplay = function(button){
-    const buttonValue = button.target.textContent;
+    const buttonValue = button.target.value;
     switch (buttonValue) {
         case "1":
         case "2":
@@ -113,7 +126,11 @@ const updateDisplay = function(button){
         case "8":
         case "9":
         case "0":
+        case ".":
             displayContainer.textContent += buttonValue;
+            break;
+        case "backspace":
+            backspace();
             break;
         case "+":
         case "-":
@@ -123,7 +140,6 @@ const updateDisplay = function(button){
             break;
         case "ENTER":
             currentDisplayContent = Array.from(displayContainer.textContent);
-            //if no operator, keep numbers in display somehow
             getNumTwo(currentDisplayContent);
             calculate(operator,num1,num2);
             displayContainer.textContent = result;
