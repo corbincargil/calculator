@@ -2,9 +2,9 @@
 let result;
 let operator;
 let currentDisplayContent;
+let lastElement;
 
 //                          ~~To-Do~~  
-// - Make updateOperator function
 // - Fix bug where if you input a num & operator, you can't select a diff operator
 // - Add decimal button
 // - Add backspace button
@@ -89,14 +89,34 @@ const updateDisplay = function(button){
         case "-":
         case "*":
         case "/":
+
             if (operator) {
                 currentDisplayContent = Array.from(displayContainer.textContent);
-                getNumTwo(currentDisplayContent);
-                calculate(operator,num1,num2);
-                displayContainer.textContent = result;
+                lastElement = currentDisplayContent[currentDisplayContent.length - 2];
+                switch (lastElement) {
+                    case '+':
+                    case '-':
+                    case '*':
+                    case '/':
+                        displayContainer.textContent = num1;
+                        eraseMem();
+                        getNumOne();
+                        updateOperator(buttonValue);
+                        break;
+                
+                    default:
+                        currentDisplayContent = Array.from(displayContainer.textContent);
+                        getNumTwo(currentDisplayContent);
+                        calculate(operator,num1,num2);
+                        displayContainer.textContent = result;
+                        getNumOne();
+                        updateOperator(buttonValue);
+                        break;
+                }
+            } else {
+                getNumOne();
+                updateOperator(buttonValue);
             }
-            getNumOne();
-            updateOperator(buttonValue);
             break;
         case "ENTER":
             currentDisplayContent = Array.from(displayContainer.textContent);
