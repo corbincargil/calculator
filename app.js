@@ -3,11 +3,13 @@ let result;
 let operator;
 let currentDisplayContent;
 
-//TODO: 
-// - Allow users to be able to type in multiple calculations. i.e. 10+2+3 !== 33. 
+//                          ~~To-Do~~  
+// - Make updateOperator function
+// - Fix bug where if you input a num & operator, you can't select a diff operator
 // - Add decimal button
 // - Add backspace button
 // - Add keyboard functionality
+// - Display what is stored in memory (what the prev calc was)
 
 //                          ~~Functions~~
 
@@ -47,8 +49,9 @@ const getNumOne = function() {
     return num1;
 }
 //updateOperator function
-const updateOperator = function() {
-
+const updateOperator = function(operatorSelected) {
+    displayContainer.textContent += ` ${operatorSelected} `;
+    operator = operatorSelected;
 }
 //getNumTwo function
 const getNumTwo = function(currentInputs) {
@@ -60,7 +63,7 @@ const getNumTwo = function(currentInputs) {
     num2 = parseFloat(num2);
     return num2;
 }
-//eraseMem function
+//eraseMemory function
 const eraseMem = function() {
     num1 = '';
     operator = '';
@@ -91,11 +94,9 @@ const updateDisplay = function(button){
                 getNumTwo(currentDisplayContent);
                 calculate(operator,num1,num2);
                 displayContainer.textContent = result;
-                getNumOne();
             }
             getNumOne();
-            displayContainer.textContent += ` ${buttonValue} `;
-            operator = buttonValue;
+            updateOperator(buttonValue);
             break;
         case "ENTER":
             currentDisplayContent = Array.from(displayContainer.textContent);
@@ -111,7 +112,7 @@ const updateDisplay = function(button){
             eraseMem();
             break;
         default:
-            console.log('An error occurred.');
+            displayContainer.textContent = 'ERROR';
             break;
     }
 }
