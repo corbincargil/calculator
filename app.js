@@ -19,20 +19,20 @@ const getDifference = function(num1,num2){return num1 - num2;}
 const getProduct = function(num1,num2){return num1 * num2;}
 //Divide
 const getQuotient = function(num1,num2){return num1 / num2;}
-//Operate function
+//Calculate function
 const calculate = function(operator,num1,num2){
     switch (operator) {
         case '+':
-            result = getSum(num1,num2);
+            result = parseFloat(getSum(num1,num2));
             break;
         case '-':
-            result = getDifference(num1,num2);
+            result = parseFloat(getDifference(num1,num2));
             break;
         case '*':
-            result = getProduct(num1,num2);
+            result = parseFloat(getProduct(num1,num2));
             break;
         case '/':
-            result = getQuotient(num1,num2);
+            result = parseFloat(getQuotient(num1,num2));
             break;
         default:
             console.log('An error occurred.');
@@ -40,7 +40,17 @@ const calculate = function(operator,num1,num2){
     return result;
     }
 }
-// getNumTwo
+//getNumOne function 
+const getNumOne = function() {
+    num1 = displayContainer.textContent;
+    num1 = parseFloat(num1);
+    return num1;
+}
+//updateOperator function
+const updateOperator = function() {
+
+}
+//getNumTwo function
 const getNumTwo = function(currentInputs) {
     const operatorIndex = currentInputs.indexOf(operator);
     let sliceStart = operatorIndex+2;
@@ -50,7 +60,13 @@ const getNumTwo = function(currentInputs) {
     num2 = parseFloat(num2);
     return num2;
 }
-
+//eraseMem function
+const eraseMem = function() {
+    num1 = '';
+    operator = '';
+    num2 = '';
+}
+//updateDisplay function
 const updateDisplay = function(button){
     const buttonValue = button.target.textContent;
     switch (buttonValue) {
@@ -75,9 +91,9 @@ const updateDisplay = function(button){
                 getNumTwo(currentDisplayContent);
                 calculate(operator,num1,num2);
                 displayContainer.textContent = result;
+                getNumOne();
             }
-            num1 = displayContainer.textContent;
-            num1 = parseFloat(num1);
+            getNumOne();
             displayContainer.textContent += ` ${buttonValue} `;
             operator = buttonValue;
             break;
@@ -87,9 +103,12 @@ const updateDisplay = function(button){
             getNumTwo(currentDisplayContent);
             calculate(operator,num1,num2);
             displayContainer.textContent = result;
+            eraseMem();
+            getNumOne();
             break;
         case "CLEAR":
             displayContainer.textContent = '';
+            eraseMem();
             break;
         default:
             console.log('An error occurred.');
