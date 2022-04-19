@@ -6,6 +6,7 @@ let lastElement;
 
 //                          ~~To-Do~~  
 // - Fix bug where if you input a num & operator, you can't select a diff operator
+            //Done. Just need to clean it up (refactor code, create functions, make more readable)
 // - Add decimal button
 // - Add backspace button
 // - Add keyboard functionality
@@ -89,7 +90,6 @@ const updateDisplay = function(button){
         case "-":
         case "*":
         case "/":
-
             if (operator) {
                 currentDisplayContent = Array.from(displayContainer.textContent);
                 lastElement = currentDisplayContent[currentDisplayContent.length - 2];
@@ -103,7 +103,6 @@ const updateDisplay = function(button){
                         getNumOne();
                         updateOperator(buttonValue);
                         break;
-                
                     default:
                         currentDisplayContent = Array.from(displayContainer.textContent);
                         getNumTwo(currentDisplayContent);
