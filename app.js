@@ -49,11 +49,6 @@ const getNumOne = function() {
     num1 = parseFloat(num1);
     return num1;
 }
-//updateOperator function
-const updateOperator = function(operatorSelected) {
-    displayContainer.textContent += ` ${operatorSelected} `;
-    operator = operatorSelected;
-}
 //getNumTwo function
 const getNumTwo = function(currentInputs) {
     const operatorIndex = currentInputs.indexOf(operator);
@@ -63,6 +58,40 @@ const getNumTwo = function(currentInputs) {
     num2 = num2.join().trim().replace(/[^0-9]/g,"");
     num2 = parseFloat(num2);
     return num2;
+}
+//updateOperator function
+const updateOperator = function(operatorSelected) {
+    displayContainer.textContent += ` ${operatorSelected} `;
+    operator = operatorSelected;
+}
+//operatorEvaluation function
+const operatorEval = function(operatorID) {
+    if (operator) {
+        currentDisplayContent = Array.from(displayContainer.textContent);
+        lastElement = currentDisplayContent[currentDisplayContent.length - 2];
+        switch (lastElement) {
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+                displayContainer.textContent = num1;
+                eraseMem();
+                getNumOne();
+                updateOperator(operatorID);
+                break;
+            default:
+                currentDisplayContent = Array.from(displayContainer.textContent);
+                getNumTwo(currentDisplayContent);
+                calculate(operator,num1,num2);
+                displayContainer.textContent = result;
+                getNumOne();
+                updateOperator(operatorID);
+                break;
+        }
+    } else {
+        getNumOne();
+        updateOperator(operatorID);
+    }
 }
 //eraseMemory function
 const eraseMem = function() {
@@ -90,32 +119,7 @@ const updateDisplay = function(button){
         case "-":
         case "*":
         case "/":
-            if (operator) {
-                currentDisplayContent = Array.from(displayContainer.textContent);
-                lastElement = currentDisplayContent[currentDisplayContent.length - 2];
-                switch (lastElement) {
-                    case '+':
-                    case '-':
-                    case '*':
-                    case '/':
-                        displayContainer.textContent = num1;
-                        eraseMem();
-                        getNumOne();
-                        updateOperator(buttonValue);
-                        break;
-                    default:
-                        currentDisplayContent = Array.from(displayContainer.textContent);
-                        getNumTwo(currentDisplayContent);
-                        calculate(operator,num1,num2);
-                        displayContainer.textContent = result;
-                        getNumOne();
-                        updateOperator(buttonValue);
-                        break;
-                }
-            } else {
-                getNumOne();
-                updateOperator(buttonValue);
-            }
+            operatorEval(buttonValue);
             break;
         case "ENTER":
             currentDisplayContent = Array.from(displayContainer.textContent);
