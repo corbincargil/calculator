@@ -1,25 +1,74 @@
+:root {
+    --button-margin: 6px;
+    --button-border: 1px solid black;
+    --button-border-radius: 8px;
+}
+
 body {
     background-color: rgb(177, 177, 177);
 }
 
 #main-container {
-    margin-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 500px;
 }
 
 #display-container {
-    margin: 0px;
+    margin: 30px;
     padding: 4px;
-    min-width: 70px;
-    height: 18px;
+    width: 280px;
+    height: 80px;
     background-color: rgb(255, 255, 255);
 }
 
+#numbers-operators-container {
+    padding: 8px;
+    display: flex;
+    gap: 20px;
+    border: 3px solid rgb(73, 73, 73);
+    border-radius: 16px;
+}
 #top-row,
 #upper-mid-row,
 #lower-mid-row,
 #bottom-row {
     display: flex;
+}
+#numbers-container button {
+    font-size: 36px;
+    width: 50px;
+    height: 50px;
+    margin: var(--button-margin);
+    border: var(--button-border);
+    border-radius: var(--button-border-radius);
+    
+}
+
+#operators-container {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+#operators-container button {
+    font-size: 36px;
+    width: 50px;
+    height: 50px;
+    margin: var(--button-margin);
+    border: var(--button-border);
+    border-radius: var(--button-border-radius);
+}
+
+#controls-container {
+    margin-top: 30px;
+    display: flex;
+    gap: 42px;
+}
+
+#controls-container button {
+   font-size: 28px;
+    width: max-content;
+
 }

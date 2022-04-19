@@ -7,7 +7,6 @@ let newDisplayContent;
 let lastElement;
 
 //                          ~~To-Do~~  
-// - Add backspace button
 // - Add keyboard functionality
 // - Display what is stored in memory (what the prev calc was)
 
