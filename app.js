@@ -112,6 +112,30 @@ const backspace = function() {
         displayContainer.textContent = newDisplayContent.replace(/[,]/g,"");
     }
 }
+//decimalEvaluation function
+const decimalEval = function () {
+    const decimalContent = displayContainer.textContent;
+    const decimalContentString = decimalContent.toString();
+    const arrayDecimalContent = Array.from(decimalContentString);
+    if (operator) {
+        let i = 0;
+        let decimalOperatorIndex = arrayDecimalContent.indexOf(operator);
+        const numTwo = arrayDecimalContent.slice(decimalOperatorIndex);
+        numTwo.forEach(element => {
+            if (element =='.') { i+=1}
+            if (i > 1) {
+                displayContainer.textContent = 'ERROR';
+                alert("You can only have one decimal in each value");
+            }
+        });
+    } else if (arrayDecimalContent.includes('.')) {
+        const indexOfFirstDecimal = arrayDecimalContent.indexOf('.');
+        if (arrayDecimalContent.includes('.',indexOfFirstDecimal+1)) {
+            displayContainer.textContent = 'ERROR';
+            alert("You can only have one decimal in each value");
+        }
+    }
+}
 //updateDisplay function
 const updateDisplay = function(button){
     const buttonValue = button.target.value;
@@ -165,3 +189,6 @@ const allButtons = mainContainer.querySelectorAll('button');
 allButtons.forEach((button) => {
     button.addEventListener("click",updateDisplay);
 })
+
+const decimalButton = document.getElementById("decimal-button");
+decimalButton.addEventListener("click", decimalEval)
