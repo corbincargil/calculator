@@ -2,7 +2,11 @@
 let result;
 let operator;
 
-
+//TODO: 
+// - Allow users to be able to type in multiple calculations. i.e. 10+2+3 !== 33. 
+// - Add decimal button
+// - Add backspace button
+// - Add keyboard functionality
 
 //                          ~~Functions~~
 
@@ -15,7 +19,7 @@ const getProduct = function(num1,num2){return num1 * num2;}
 //Divide
 const getQuotient = function(num1,num2){return num1 / num2;}
 //Operate function
-const operate = function(operator,num1,num2){
+const calculate = function(operator,num1,num2){
     switch (operator) {
         case '+':
             result = getSum(num1,num2);
@@ -34,43 +38,38 @@ const operate = function(operator,num1,num2){
     return result;
     }
 }
+// getNumTwo
+const getNumTwo = function(currentInputs) {
+    const operatorIndex = currentInputs.indexOf(operator);
+    let sliceStart = operatorIndex+2;
+    let sliceEnd = currentInputs.length;
+    num2 = currentInputs.slice(sliceStart,sliceEnd);
+    num2 = num2.join().trim().replace(/[^0-9]/g,"");
+    num2 = parseFloat(num2);
+    return num2;
+}
 
 const updateDisplay = function(button){
     const buttonValue = button.target.textContent;
     switch (buttonValue) {
         case "1":
-            displayContainer.textContent += '1';
-            break;
         case "2":
-            displayContainer.textContent += '2';
-            break;
         case "3":
-            displayContainer.textContent += '3';
-            break;
         case "4":
-            displayContainer.textContent += '4';
-            break;
         case "5":
-            displayContainer.textContent += '5';
-            break;
         case "6":
-            displayContainer.textContent += '6';
-            break;
         case "7":
-            displayContainer.textContent += '7';
-            break;
         case "8":
-            displayContainer.textContent += '8';
-            break;
         case "9":
-            displayContainer.textContent += '9';
-            break;
         case "0":
-            displayContainer.textContent += '0';
+            displayContainer.textContent += buttonValue;
             break;
         case "+":
             num1 = displayContainer.textContent;
             num1 = parseFloat(num1);
+            if (operator) {
+
+            }
             displayContainer.textContent += ' + ';
             operator = '+';
             break;
@@ -94,15 +93,9 @@ const updateDisplay = function(button){
             break;
         case "ENTER":
             const currentDisplayContent = Array.from(displayContainer.textContent);
-            const operatorIndex = currentDisplayContent.indexOf(operator);
-            let sliceStart = operatorIndex+2;
-            let sliceEnd = currentDisplayContent.length;
-            num2 = currentDisplayContent.slice(sliceStart,sliceEnd);
-            num2 = num2.join().trim().replace(/[^0-9]/g,"");
-            num2 = parseFloat(num2);
             //if no operator, keep numbers in display somehow
-
-            operate(operator,num1,num2);
+            getNumTwo(currentDisplayContent);
+            calculate(operator,num1,num2);
             displayContainer.textContent = result;
             break;
         case "CLEAR":
