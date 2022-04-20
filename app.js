@@ -6,9 +6,14 @@ let currentDisplayContent;
 let newDisplayContent;
 let lastElement;
 
+const mainContainer = document.getElementById('main-container');
+const displayContainer = document.getElementById('display-container');
+const allButtons = mainContainer.querySelectorAll('button');
+const decimalButton = document.getElementById("decimal-button");
+
 //                          ~~To-Do~~  
-// - Add keyboard functionality
 // - Display what is stored in memory (what the prev calc was)
+
 
 //                          ~~Functions~~
 
@@ -146,10 +151,8 @@ const checkDisplay = function() {
     }
 }
 //updateDisplay function
-const updateDisplay = function(button){
-    let buttonValue = button.target.value;
-    //buttonValue = button.key;
-    switch (buttonValue) {
+const updateDisplay = function(input){
+    switch (input) {
         case "1":
         case "2":
         case "3":
@@ -160,19 +163,22 @@ const updateDisplay = function(button){
         case "8":
         case "9":
         case "0":
-        case ".":
-            displayContainer.textContent += buttonValue;
+            displayContainer.textContent += input;
             break;
-        case "backspace":
+        case ".":
+            displayContainer.textContent += input;
+            decimalEval();
+            break;
+        case "Backspace":
             backspace();
             break;
         case "+":
         case "-":
         case "*":
         case "/":
-            operatorEval(buttonValue);
+            operatorEval(input);
             break;
-        case "ENTER":
+        case "Enter":
             currentDisplayContent = Array.from(displayContainer.textContent);
             getNumTwo(currentDisplayContent);
             calculate(operator,num1,num2);
@@ -180,9 +186,11 @@ const updateDisplay = function(button){
             eraseMem();
             getNumOne();
             break;
-        case "CLEAR":
+        case "Delete":
             displayContainer.textContent = '';
             eraseMem();
+            break;
+        case "Shift":
             break;
         default:
             displayContainer.textContent = 'ERROR';
@@ -190,16 +198,19 @@ const updateDisplay = function(button){
     }
     checkDisplay();
 }
+//convertKeyboardInput function
+const convertKeyboardInput = function(event) {
+    const keyPressed = event.key;
+    updateDisplay(keyPressed);
+}
+
 //                          ~~DOM Manipulation~~
 
-//Numbers & Controls Buttons
-const mainContainer = document.getElementById('main-container');
-const displayContainer = document.getElementById('display-container');
-const allButtons = mainContainer.querySelectorAll('button');
+//Event listeners for keyboard and buttons
 allButtons.forEach((button) => {
-    button.addEventListener("click",updateDisplay);
-    button.addEventListener("keydown",updateDisplay)
+    button.addEventListener("click",(buttonValue) => {
+        buttonValue = button.value;
+        updateDisplay(buttonValue);
+    });
 })
-
-const decimalButton = document.getElementById("decimal-button");
-decimalButton.addEventListener("click", decimalEval)
+document.addEventListener("keydown",convertKeyboardInput);
