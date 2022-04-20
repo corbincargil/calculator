@@ -53,7 +53,7 @@ const getNumTwo = function(currentInputs) {
     let sliceStart = operatorIndex+2;
     let sliceEnd = currentInputs.length;
     num2 = currentInputs.slice(sliceStart,sliceEnd);
-    num2 = num2.join().trim().replace(/[^0-9]/g,"");
+    num2 = num2.join().trim().replace(/[,]/g,"");
     num2 = parseFloat(num2);
     return num2;
 }
