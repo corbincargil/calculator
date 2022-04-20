@@ -96,6 +96,7 @@ const eraseMem = function() {
     num1 = '';
     operator = '';
     num2 = '';
+    result = '0';
 }
 //backspace function
 const backspace = function() {
@@ -135,9 +136,19 @@ const decimalEval = function () {
         }
     }
 }
+//checkDisplay function
+const checkDisplay = function() {
+    currentDisplayContent = Array.from(displayContainer.textContent);
+    if (currentDisplayContent.length > 11) {
+        currentDisplayContent.pop()
+        currentDisplayContent = currentDisplayContent.join().trim().replace(/[,]/g,"");
+        displayContainer.textContent = currentDisplayContent;
+    }
+}
 //updateDisplay function
 const updateDisplay = function(button){
-    const buttonValue = button.target.value;
+    let buttonValue = button.target.value;
+    //buttonValue = button.key;
     switch (buttonValue) {
         case "1":
         case "2":
@@ -177,8 +188,8 @@ const updateDisplay = function(button){
             displayContainer.textContent = 'ERROR';
             break;
     }
+    checkDisplay();
 }
-
 //                          ~~DOM Manipulation~~
 
 //Numbers & Controls Buttons
@@ -187,6 +198,7 @@ const displayContainer = document.getElementById('display-container');
 const allButtons = mainContainer.querySelectorAll('button');
 allButtons.forEach((button) => {
     button.addEventListener("click",updateDisplay);
+    button.addEventListener("keydown",updateDisplay)
 })
 
 const decimalButton = document.getElementById("decimal-button");
