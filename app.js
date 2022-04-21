@@ -5,14 +5,24 @@ let currentDisplayString;
 let currentDisplayContent;
 let newDisplayContent;
 let lastElement;
+let memory;
 
 const mainContainer = document.getElementById('main-container');
 const displayContainer = document.getElementById('display-container');
 const allButtons = mainContainer.querySelectorAll('button');
 const decimalButton = document.getElementById("decimal-button");
+const enterButton = document.getElementById("Enter");
+const memDisplay = document.getElementById("memory-display");
 
 //                          ~~To-Do~~  
 // - Display what is stored in memory (what the prev calc was)
+// - Add a ans button and use memory variable to recall prev answer
+
+//                          ~~Features~~ 
+// - Basic arithmetic
+// - Button and Keyboard functionality
+// - Use decimals in your numbers
+// - Backspace and clear memory buttons (clear mem with keyboard using 'Delete' key)
 
 
 //                          ~~Functions~~
@@ -42,6 +52,7 @@ const calculate = function(operator,num1,num2){
             break;
         default:
             console.log('An error occurred.');
+    //result = Math.round(result*100)/100;
     operator = '';
     return result;
     }
@@ -101,7 +112,17 @@ const eraseMem = function() {
     num1 = '';
     operator = '';
     num2 = '';
-    result = '0';
+    if (displayContainer.textContent == '') {memDisplay.textContent = `ANS: ${result}`}
+}
+//eraseAllMem function
+const eraseAllMem = function() {
+    displayContainer.textContent = '';
+    memDisplay.textContent = 'ANS:';
+    num1 = '';
+    operator = '';
+    num2 = '';
+    result = 0;
+    memory = 0;
 }
 //backspace function
 const backspace = function() {
@@ -150,6 +171,16 @@ const checkDisplay = function() {
         displayContainer.textContent = currentDisplayContent;
     }
 }
+//updateMemory function
+const updateMemory = function() {
+    memDisplay.textContent = `ANS: ${Math.round(100*result)/100}`
+    memory = result;
+}
+//ANS Button function
+const ansButton = function() {
+    if (displayContainer.textContent == memory) { }
+    else {displayContainer.textContent += memory}
+}
 //updateDisplay function
 const updateDisplay = function(input){
     switch (input) {
@@ -182,7 +213,8 @@ const updateDisplay = function(input){
             currentDisplayContent = Array.from(displayContainer.textContent);
             getNumTwo(currentDisplayContent);
             calculate(operator,num1,num2);
-            displayContainer.textContent = result;
+            displayContainer.textContent = Math.round(100*result)/100;
+            updateMemory();
             eraseMem();
             getNumOne();
             break;
@@ -191,6 +223,12 @@ const updateDisplay = function(input){
             eraseMem();
             break;
         case "Shift":
+            break;
+        case "ANS":
+            ansButton();
+            break;
+        case "clear-all":
+            eraseAllMem();
             break;
         default:
             displayContainer.textContent = 'ERROR';
