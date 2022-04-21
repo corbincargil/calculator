@@ -14,16 +14,6 @@ const decimalButton = document.getElementById("decimal-button");
 const enterButton = document.getElementById("Enter");
 const memDisplay = document.getElementById("memory-display");
 
-//                          ~~To-Do~~  
-// - Display what is stored in memory (what the prev calc was)
-// - Add a ans button and use memory variable to recall prev answer
-
-//                          ~~Features~~ 
-// - Basic arithmetic
-// - Button and Keyboard functionality
-// - Use decimals in your numbers
-// - Backspace and clear memory buttons (clear mem with keyboard using 'Delete' key)
-
 
 //                          ~~Functions~~
 
@@ -181,6 +171,7 @@ const ansButton = function() {
     if (displayContainer.textContent == memory) { }
     else {displayContainer.textContent += memory}
 }
+//                          ~~Updating the display~~
 //updateDisplay function
 const updateDisplay = function(input){
     switch (input) {
