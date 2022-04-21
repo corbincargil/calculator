@@ -127,3 +127,39 @@ body {
 #controls-container #clear-all {
     font-size: 16px;
 }
+
+.footer{
+    margin: 20px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 80%;
+    font-size: 15px;
+}
+.footer img  {
+    aspect-ratio: 1;
+    width: 18px;
+    height: 18px;
+    flex-shrink: none;
+}
+.footer div{
+    display: flex;
+    gap: 6px;    
+    align-items: center;
+    color: rgb(0, 0, 0);
+}
+
+.footer a:hover {
+    transform: scale(1.05);
+    transition: .2s;
+}
+.footer a:hover img {
+    transform: rotate(1turn);
+    transition: 1s;
+}
+
+a:visited {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
